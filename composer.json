@@ -1,0 +1,21 @@
+{
+    "name": "mf4php/mf4php-beanstalk",
+    "description": "This is an mf4php binding for Beanstalk.",
+    "license": "MIT",
+    "keywords": ["mf4php", "facade", "wrapper", "beanstalk"],
+    "authors": [
+        {
+            "name": "Szurovecz János",
+            "homepage": "http://www.szjani.hu/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "mf4php/mf4php": "dev-master",
+        "pda/pheanstalk": "dev-master"
+    },
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {"mf4php": "src/"}
+    }
+}
