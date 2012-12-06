@@ -27,11 +27,13 @@ use lf4php\LoggerFactory;
 use mf4php\AbstractMessageDispatcher;
 use mf4php\DelayableMessage;
 use mf4php\Message;
+use mf4php\MessageException;
 use mf4php\MessageListener;
 use mf4php\PriorityableMessage;
 use mf4php\Queue;
 use mf4php\RuntimeLimitableMessage;
 use Pheanstalk;
+use Pheanstalk_Exception_ConnectionException;
 use Pheanstalk_Job;
 
 /**
@@ -72,8 +74,13 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
             $ttr = $message->getRuntimeLimit();
         }
 
-        $this->pheanstalk->putInTube($queue->getName(), serialize($message), $priority, $delay, $ttr);
         $logger = LoggerFactory::getLogger(__CLASS__);
+        try {
+            $this->pheanstalk->putInTube($queue->getName(), serialize($message), $priority, $delay, $ttr);
+        } catch (Pheanstalk_Exception_ConnectionException $e) {
+            $logger->error($e);
+            throw new MessageException('Message sending error!', null, $e);
+        }
         $logger->debug("A message has been sent to beanstalk queue '{{q}}'", array('q' => $queue->getName()));
     }
 

@@ -29,7 +29,12 @@ require_once 'Config.php';
 
 use mf4php\beanstalk\BeanstalkMessage;
 use mf4php\beanstalk\SampleObject;
+use mf4php\MessageException;
 
 $config = new Config();
 $message = new BeanstalkMessage(new SampleObject('szjani@szjani.hu'));
-$config->getDispatcher()->send($config->getQueue(), $message);
+try {
+    $config->getDispatcher()->send($config->getQueue(), $message);
+} catch (MessageException $e) {
+    echo $e->getMessage() . PHP_EOL;
+}
