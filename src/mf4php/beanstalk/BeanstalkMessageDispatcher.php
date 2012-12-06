@@ -23,6 +23,7 @@
 
 namespace mf4php\beanstalk;
 
+use lf4php\LoggerFactory;
 use mf4php\AbstractMessageDispatcher;
 use mf4php\DelayableMessage;
 use mf4php\Message;
@@ -72,6 +73,8 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
         }
 
         $this->pheanstalk->putInTube($queue->getName(), serialize($message), $priority, $delay, $ttr);
+        $logger = LoggerFactory::getLogger(__CLASS__);
+        $logger->debug("A message has been sent to beanstalk queue '{{q}}'", array('q' => $queue->getName()));
     }
 
     /**
@@ -83,6 +86,11 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
      */
     public function messageArrived(Queue $queue, Pheanstalk_Job $job)
     {
+        $logger = LoggerFactory::getLogger(__CLASS__);
+        $logger->debug(
+            "A message '{{id}}' has arrived from beanstalk queue '{{q}}'",
+            array('q' => $queue->getName(), 'id' => $job->getId())
+        );
         $message = unserialize($job->getData());
         /* @var $listener MessageListener */
         foreach ($this->getListeners($queue) as $listener) {
