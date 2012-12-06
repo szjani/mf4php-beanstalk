@@ -34,6 +34,6 @@ class Listener implements MessageListener
     public function onMessage(Message $message)
     {
         echo "onMessage called" . PHP_EOL;
-        echo serialize($message);
+        echo serialize($message) . PHP_EOL;
     }
 }

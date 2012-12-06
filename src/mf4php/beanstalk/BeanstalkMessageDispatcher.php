@@ -78,8 +78,9 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
         try {
             $this->pheanstalk->putInTube($queue->getName(), serialize($message), $priority, $delay, $ttr);
         } catch (Pheanstalk_Exception_ConnectionException $e) {
-            $logger->error($e);
-            throw new MessageException('Message sending error!', null, $e);
+            $newExp = new MessageException('Message sending error!', null, $e);
+            $logger->error($newExp);
+            throw $newExp;
         }
         $logger->debug("A message has been sent to beanstalk queue '{{q}}'", array('q' => $queue->getName()));
     }
@@ -103,6 +104,16 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
         foreach ($this->getListeners($queue) as $listener) {
             $listener->onMessage($message);
         }
-        $this->pheanstalk->delete($job);
+        try {
+            $this->pheanstalk->delete($job);
+        } catch (Pheanstalk_Exception_ConnectionException $e) {
+            $newExp = new MessageException('Message deleting error!', null, $e);
+            $logger->error($newExp);
+            throw $newExp;
+        }
+        $logger->debug(
+            "A message '{{id}}' has been deleted from beanstalk queue '{{q}}'",
+            array('q' => $queue->getName(), 'id' => $job->getId())
+        );
     }
 }

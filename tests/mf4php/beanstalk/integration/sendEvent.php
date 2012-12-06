@@ -27,9 +27,13 @@ require_once __DIR__ . '/../../../bootstrap.php';
 require_once __DIR__ . '/../SampleObject.php';
 require_once 'Config.php';
 
+use lf4php\LoggerFactory;
+use lf4php\stdout\StdoutLoggerFactory;
 use mf4php\beanstalk\BeanstalkMessage;
 use mf4php\beanstalk\SampleObject;
 use mf4php\MessageException;
+
+LoggerFactory::setILoggerFactory(new StdoutLoggerFactory());
 
 $config = new Config();
 $message = new BeanstalkMessage(new SampleObject('szjani@szjani.hu'));
