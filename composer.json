@@ -13,7 +13,7 @@
         "php": ">=5.3.0",
         "mf4php/mf4php": "dev-master",
         "pda/pheanstalk": "dev-master",
-        "lf4php/lf4php": "dev-master"
+        "lf4php/lf4php": "1.0.0"
     },
     "minimum-stability": "dev",
     "autoload": {
