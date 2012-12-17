@@ -11,11 +11,13 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "mf4php/mf4php": "dev-master",
-        "pda/pheanstalk": "dev-master",
-        "lf4php/lf4php": "1.0.0"
+        "mf4php/mf4php": "@dev",
+        "pda/pheanstalk": "@dev",
+        "lf4php/lf4php": "1.0.*"
     },
-    "minimum-stability": "dev",
+    "require-dev": {
+	"lf4php/lf4php-stdout": "1.0.*"
+    },
     "autoload": {
         "psr-0": {"mf4php": "src/"}
     }
