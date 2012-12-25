@@ -82,7 +82,7 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
             $logger->error($newExp);
             throw $newExp;
         }
-        $logger->debug("A message has been sent to beanstalk queue '{{q}}'", array('q' => $queue->getName()));
+        $logger->info("A message has been sent to beanstalk queue '{{q}}'", array('q' => $queue->getName()));
     }
 
     /**
@@ -95,7 +95,7 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
     public function messageArrived(Queue $queue, Pheanstalk_Job $job)
     {
         $logger = LoggerFactory::getLogger(__CLASS__);
-        $logger->debug(
+        $logger->info(
             "A message '{{id}}' has arrived from beanstalk queue '{{q}}'",
             array('q' => $queue->getName(), 'id' => $job->getId())
         );
@@ -111,7 +111,7 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
             $logger->error($newExp);
             throw $newExp;
         }
-        $logger->debug(
+        $logger->info(
             "A message '{{id}}' has been deleted from beanstalk queue '{{q}}'",
             array('q' => $queue->getName(), 'id' => $job->getId())
         );
