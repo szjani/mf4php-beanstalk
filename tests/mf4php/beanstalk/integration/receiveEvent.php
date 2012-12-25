@@ -28,9 +28,9 @@ require_once __DIR__ . '/../SampleObject.php';
 require_once 'Config.php';
 
 use lf4php\LoggerFactory;
-use lf4php\stdout\StdoutLoggerFactory;
+use lf4php\log4php\Log4phpLoggerFactory;
 
-LoggerFactory::setILoggerFactory(new StdoutLoggerFactory());
+LoggerFactory::setILoggerFactory(new Log4phpLoggerFactory());
 
 $config = new Config();
 $pheanstalk = $config->getPheanstalk();

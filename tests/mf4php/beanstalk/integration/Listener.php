@@ -23,6 +23,7 @@
 
 namespace mf4php\beanstalk\integration;
 
+use lf4php\LoggerFactory;
 use mf4php\Message;
 use mf4php\MessageListener;
 
@@ -33,7 +34,10 @@ class Listener implements MessageListener
 {
     public function onMessage(Message $message)
     {
-        echo "onMessage called" . PHP_EOL;
-        echo serialize($message) . PHP_EOL;
+        $logger = LoggerFactory::getLogger(__CLASS__);
+        $logger->info('onMessage called');
+        $logger->info(serialize($message));
+//        echo "onMessage called" . PHP_EOL;
+//        echo serialize($message) . PHP_EOL;
     }
 }
