@@ -41,10 +41,16 @@ class BeanstalMessageDispatcherTest extends PHPUnit_Framework_TestCase
      */
     private $dispatcher;
 
+    /**
+     * @var \trf4php\ObservableTransactionManager
+     */
+    private $tm;
+
     public function setUp()
     {
         $this->pheanstalkMock = $this->getMock('Pheanstalk', array('putInTube', 'delete'), array(), '', false);
-        $this->dispatcher = new BeanstalkMessageDispatcher($this->pheanstalkMock);
+        $this->tm = $this->getMock('\trf4php\ObservableTransactionManager');
+        $this->dispatcher = new BeanstalkMessageDispatcher($this->pheanstalkMock, $this->tm);
     }
 
     public function testSend()

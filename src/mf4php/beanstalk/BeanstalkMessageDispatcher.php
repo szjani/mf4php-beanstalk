@@ -24,7 +24,6 @@
 namespace mf4php\beanstalk;
 
 use lf4php\LoggerFactory;
-use mf4php\AbstractMessageDispatcher;
 use mf4php\DelayableMessage;
 use mf4php\Message;
 use mf4php\MessageException;
@@ -32,14 +31,16 @@ use mf4php\MessageListener;
 use mf4php\PriorityableMessage;
 use mf4php\Queue;
 use mf4php\RuntimeLimitableMessage;
+use mf4php\TransactedMessageDispatcher;
 use Pheanstalk;
 use Pheanstalk_Exception_ConnectionException;
 use Pheanstalk_Job;
+use trf4php\ObservableTransactionManager;
 
 /**
  * @author Szurovecz János <szjani@szjani.hu>
  */
-class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
+class BeanstalkMessageDispatcher extends TransactedMessageDispatcher
 {
     /**
      * @var Pheanstalk
@@ -47,10 +48,15 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
     private $pheanstalk;
 
     /**
+     *
      * @param Pheanstalk $pheanstalk
+     * @param ObservableTransactionManager $transactionManager
      */
-    public function __construct(Pheanstalk $pheanstalk)
+    public function __construct(Pheanstalk $pheanstalk, ObservableTransactionManager $transactionManager = null)
     {
+        if ($transactionManager !== null) {
+            parent::__construct($transactionManager);
+        }
         $this->pheanstalk = $pheanstalk;
     }
 
@@ -58,7 +64,7 @@ class BeanstalkMessageDispatcher extends AbstractMessageDispatcher
      * @param Queue $queue
      * @param Message $message
      */
-    public function send(Queue $queue, Message $message)
+    protected function immediateSend(Queue $queue, Message $message)
     {
         $delay = Pheanstalk::DEFAULT_DELAY;
         $ttr = Pheanstalk::DEFAULT_TTR;
