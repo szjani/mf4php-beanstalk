@@ -13,10 +13,10 @@
         "php": ">=5.3.0",
         "mf4php/mf4php": "1.1.*",
         "pda/pheanstalk": "@dev",
-        "lf4php/lf4php": "2.0.*"
+        "lf4php/lf4php": "3.0.*"
     },
     "require-dev": {
-        "lf4php/lf4php-log4php": "1.0.*"
+        "lf4php/lf4php-log4php": "2.0.*"
     },
     "autoload": {
         "psr-0": {"mf4php": "src/"}

@@ -88,7 +88,7 @@ class BeanstalkMessageDispatcher extends TransactedMessageDispatcher
             $logger->error($newExp);
             throw $newExp;
         }
-        $logger->info("A message has been sent to beanstalk queue '{{q}}'", array('q' => $queue->getName()));
+        $logger->info("A message has been sent to beanstalk queue '{}'", array($queue->getName()));
     }
 
     /**
@@ -101,10 +101,7 @@ class BeanstalkMessageDispatcher extends TransactedMessageDispatcher
     public function messageArrived(Queue $queue, Pheanstalk_Job $job)
     {
         $logger = LoggerFactory::getLogger(__CLASS__);
-        $logger->info(
-            "A message '{{id}}' has arrived from beanstalk queue '{{q}}'",
-            array('q' => $queue->getName(), 'id' => $job->getId())
-        );
+        $logger->info("Message '{}' has arrived from beanstalk queue '{}'", array($job->getId(), $queue->getName()));
         $message = unserialize($job->getData());
         /* @var $listener MessageListener */
         foreach ($this->getListeners($queue) as $listener) {
@@ -118,8 +115,7 @@ class BeanstalkMessageDispatcher extends TransactedMessageDispatcher
             throw $newExp;
         }
         $logger->info(
-            "A message '{{id}}' has been deleted from beanstalk queue '{{q}}'",
-            array('q' => $queue->getName(), 'id' => $job->getId())
+            "Message '{}' has been deleted from beanstalk queue '{}'", array($job->getId(), $queue->getName())
         );
     }
 }
