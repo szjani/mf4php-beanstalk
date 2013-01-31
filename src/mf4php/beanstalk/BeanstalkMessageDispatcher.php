@@ -27,7 +27,6 @@ use lf4php\LoggerFactory;
 use mf4php\DelayableMessage;
 use mf4php\Message;
 use mf4php\MessageException;
-use mf4php\MessageListener;
 use mf4php\PriorityableMessage;
 use mf4php\Queue;
 use mf4php\RuntimeLimitableMessage;
@@ -58,6 +57,14 @@ class BeanstalkMessageDispatcher extends TransactedMessageDispatcher
             parent::__construct($transactionManager);
         }
         $this->pheanstalk = $pheanstalk;
+    }
+
+    /**
+     * @return Pheanstalk
+     */
+    public function getPheanstalk()
+    {
+        return $this->pheanstalk;
     }
 
     /**
