@@ -23,7 +23,7 @@
 
 namespace mf4php\beanstalk;
 
-use Pheanstalk;
+use Pheanstalk_Pheanstalk as Pheanstalk;
 use PHPUnit_Framework_TestCase;
 
 require_once 'SampleObject.php';

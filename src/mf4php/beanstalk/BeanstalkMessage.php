@@ -28,7 +28,7 @@ use mf4php\DelayableMessage;
 use mf4php\ObjectMessage;
 use mf4php\PriorityableMessage;
 use mf4php\RuntimeLimitableMessage;
-use Pheanstalk;
+use Pheanstalk_Pheanstalk as Pheanstalk;
 use Serializable;
 
 /**

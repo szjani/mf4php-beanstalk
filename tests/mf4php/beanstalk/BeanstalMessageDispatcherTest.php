@@ -48,7 +48,7 @@ class BeanstalMessageDispatcherTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->pheanstalkMock = $this->getMock('Pheanstalk', array('putInTube', 'delete'), array(), '', false);
+        $this->pheanstalkMock = $this->getMock('Pheanstalk_Pheanstalk', array('putInTube', 'delete'), array(), '', false);
         $this->tm = $this->getMock('\trf4php\ObservableTransactionManager');
         $this->dispatcher = new BeanstalkMessageDispatcher($this->pheanstalkMock, $this->tm);
     }

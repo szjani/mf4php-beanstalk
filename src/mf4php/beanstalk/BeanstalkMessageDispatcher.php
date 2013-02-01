@@ -31,7 +31,7 @@ use mf4php\PriorityableMessage;
 use mf4php\Queue;
 use mf4php\RuntimeLimitableMessage;
 use mf4php\TransactedMessageDispatcher;
-use Pheanstalk;
+use Pheanstalk_Pheanstalk as Pheanstalk;
 use Pheanstalk_Exception_ConnectionException;
 use Pheanstalk_Job;
 use trf4php\ObservableTransactionManager;
