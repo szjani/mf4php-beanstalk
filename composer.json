@@ -17,7 +17,7 @@
     },
     "minimum-stability": "dev",
     "require-dev": {
-        "lf4php/lf4php-log4php": "2.0.*"
+        "lf4php/lf4php-log4php": "dev-master"
     },
     "autoload": {
         "psr-0": {"mf4php": "src/"}
