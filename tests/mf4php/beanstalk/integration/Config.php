@@ -25,7 +25,7 @@ namespace mf4php\beanstalk\integration;
 
 use mf4php\beanstalk\BeanstalkMessageDispatcher;
 use mf4php\DefaultQueue;
-use Pheanstalk;
+use Pheanstalk_Pheanstalk as Pheanstalk;
 
 require_once 'Listener.php';
 

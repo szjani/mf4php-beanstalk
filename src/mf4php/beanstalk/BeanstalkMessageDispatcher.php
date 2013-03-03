@@ -89,13 +89,15 @@ class BeanstalkMessageDispatcher extends TransactedMessageDispatcher
 
         $logger = LoggerFactory::getLogger(__CLASS__);
         try {
-            $this->pheanstalk->putInTube($queue->getName(), serialize($message), $priority, $delay, $ttr);
+            $serializedMessage = serialize($message);
+            $jobId = $this->pheanstalk->putInTube($queue->getName(), $serializedMessage, $priority, $delay, $ttr);
+            $logger->info("A message '{}' has been sent to beanstalk queue '{}'", array($jobId, $queue->getName()));
+            $logger->debug('Beanstalk message is: {}', array($serializedMessage));
         } catch (Pheanstalk_Exception_ConnectionException $e) {
             $newExp = new MessageException('Message sending error!', null, $e);
             $logger->error($newExp);
             throw $newExp;
         }
-        $logger->info("A message has been sent to beanstalk queue '{}'", array($queue->getName()));
     }
 
     /**
